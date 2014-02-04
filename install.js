@@ -21,7 +21,7 @@ Are we on Solaris?
 function main() {
 
     var binBasePath = PATH.join(__dirname, "/bin");
-    if (!fs.existsSync(binBasePath)) {
+    if (!FS.existsSync(binBasePath)) {
         console.log("Creating directory ", binBasePath);
         FS.mkdir(binBasePath, 0755);
     } else {
@@ -62,13 +62,13 @@ function main() {
 
                     // Link to commands on PATH.
                     if (find !== true) {
-                        if (!fs.existsSync(GNU_TOOLS.FIND_CMD)) {
+                        if (!FS.existsSync(GNU_TOOLS.FIND_CMD)) {
                             console.log("Linking ", find, " to ", GNU_TOOLS.FIND_CMD);
                             FS.symlinkSync(find, GNU_TOOLS.FIND_CMD);
                         }
                     }
                     if (grep !== true) {
-                        if (!fs.existsSync(GNU_TOOLS.GREP_CMD)) {
+                        if (!FS.existsSync(GNU_TOOLS.GREP_CMD)) {
                             console.log("Linking ", grep, " to ", GNU_TOOLS.GREP_CMD);
                             FS.symlinkSync(grep, GNU_TOOLS.GREP_CMD);
                         }
@@ -89,13 +89,13 @@ function fail(err) {
 function commandExists(name, callback) {
     
     if (name === "grep") {
-        if (fs.existsSync(GNU_TOOLS.GREP_CMD)) {
+        if (FS.existsSync(GNU_TOOLS.GREP_CMD)) {
             callback(null, true);
             return;
         }
     } else
     if (name === "find") {
-        if (fs.existsSync(GNU_TOOLS.FIND_CMD)) {
+        if (FS.existsSync(GNU_TOOLS.FIND_CMD)) {
             callback(null, true);
             return;
         }
@@ -114,7 +114,7 @@ function commandExists(name, callback) {
 
         var path = stdout.split("\n")[0].trim();
 
-        fs.exists(path, function(exists) {
+        FS.exists(path, function(exists) {
             if (!exists) {
                 callback(null, false);
                 return;
@@ -169,7 +169,7 @@ function runMake(args, callback) {
 
 function compileSources(callback) {
     // check if sources already exist; don't get them below if it's not needed
-    if (fs.existsSync("./findutils-src") && fs.existsSync("./grep-src") && fs.existsSync("./pcre-src")) {
+    if (FS.existsSync("./findutils-src") && FS.existsSync("./grep-src") && FS.existsSync("./pcre-src")) {
 
         // Compile from source.
         runMake([
